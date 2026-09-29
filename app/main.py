@@ -48,14 +48,22 @@ async def metrics() -> dict:
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
-    # TODO: Enrich logs with request context (user_id_hash, session_id, feature, model, env)
-    # bind_contextvars(...)
-    
+    # Enrich logs with request context
+    bind_contextvars(
+        correlation_id=request.state.correlation_id,
+        user_id_hash=hash_user_id(body.user_id),
+        session_id=body.session_id,
+        feature=body.feature,
+        model=os.getenv("MODEL_NAME", "unknown"),
+        env=os.getenv("APP_ENV", "dev"),
+    )
+
     log.info(
         "request_received",
         service="api",
         payload={"message_preview": summarize_text(body.message)},
     )
+
     try:
         result = agent.run(
             user_id=body.user_id,
@@ -64,6 +72,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             message=body.message,
             correlation_id=request.state.correlation_id,
         )
+
         log.info(
             "response_sent",
             service="api",
@@ -77,6 +86,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             tool_success=True,
             payload={"answer_preview": summarize_text(result.answer)},
         )
+
         return ChatResponse(
             answer=result.answer,
             correlation_id=request.state.correlation_id,
@@ -87,19 +97,24 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             cost_usd=result.cost_usd,
             quality_score=result.quality_score,
         )
+
     except Exception as exc:  # pragma: no cover
         error_type = type(exc).__name__
         record_error(error_type)
+
         log.error(
             "request_failed",
             service="api",
             error_type=error_type,
             tool_name="retrieval" if isinstance(exc, RuntimeError) else None,
             tool_success=False if isinstance(exc, RuntimeError) else None,
-            payload={"detail": str(exc), "message_preview": summarize_text(body.message)},
+            payload={
+                "detail": str(exc),
+                "message_preview": summarize_text(body.message),
+            },
         )
-        raise HTTPException(status_code=500, detail=error_type) from exc
 
+        raise HTTPException(status_code=500, detail=error_type) from exc
 
 @app.post("/incidents/{name}/enable")
 async def enable_incident(name: str) -> JSONResponse:

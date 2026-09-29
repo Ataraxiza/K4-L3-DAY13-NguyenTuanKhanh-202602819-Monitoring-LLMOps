@@ -4,13 +4,13 @@
 
 ## 1. Thông tin học viên
 
-- **Họ và tên:**
-- **MSSV:**
+- **Họ và tên:** Nguyễn Tuấn Khanh
+- **MSSV:** 2A202602819
 - **Lớp:** K4-L3A
-- **Repository URL:**
+- **Repository URL:** https://github.com/Ataraxiza/K4-L3-DAY13-NguyenTuanKhanh-202602819-Monitoring-LLMOps
 - **Commit SHA cuối:**
 - **Challenge ID:**
-- **Tên project Langfuse cá nhân:** `day13-k4-l3a-<MSSV>`
+- **Tên project Langfuse cá nhân:** day13-k4-l3a-202602819
 
 ## 2. Evidence index
 
@@ -37,13 +37,13 @@
 
 | Nội dung | Baseline | Kết quả cuối | Nhận xét |
 |---|---|---|---|
-| `validate_logs.py` | | | |
-| `validate_dashboard.py` | | | |
-| `pytest` | | | |
-| Số traces hợp lệ | | | |
-| Số PII leak | | | |
-| Latency P95 / TTFT P95 | | | |
-| Retrieval success rate | | | |
+| `validate_logs.py` | FAILED, Estimated Score 30/100 — 20/21 records thiếu required fields; 20/21 thiếu enrichment; 0 correlation ID |  | |
+| `validate_dashboard.py` | PASSED — 6/6 panel hợp lệ | | |
+| `pytest` | PASSED — 22/22 tests | | |
+| Số traces hợp lệ | 0 | | |
+| Số PII leak | 0 | | |
+| Latency P95 / TTFT P95 | Chưa đo | | |
+| Retrieval success rate | Chưa đo | | |
 
 ## 4. Logging và PII
 
