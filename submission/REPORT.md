@@ -8,7 +8,7 @@
 - **MSSV:** 2A202602819
 - **Lớp:** K4-L3A
 - **Repository URL:** https://github.com/Ataraxiza/K4-L3-DAY13-NguyenTuanKhanh-202602819-Monitoring-LLMOps
-- **Commit SHA cuối:**
+- **Commit SHA cuối:** 4d0af3c909ce461f107f6564e59a0b15ee74453b
 - **Challenge ID:**`day13-k4-l3a-monitoring-llmops-v1` (K4).
 - **Tên project Langfuse cá nhân:** day13-k4-l3a-202602819
 
