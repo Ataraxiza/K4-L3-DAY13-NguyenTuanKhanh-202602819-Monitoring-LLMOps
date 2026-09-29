@@ -1,25 +1,25 @@
 alerts:
-  - name: TODO_alert_1
-    severity: TODO
-    condition: TODO
-    duration: TODO
+  - name: fast_success_slo_breach
+    severity: critical
+    condition: "fast_success_rate_pct < 99.5 and request_count >= 20 over rolling 5m"
+    duration: 5m
     type: symptom-based
     channel: slack
-    owner: TODO
+    owner: lab-operator
     runbook: docs/alerts.md#alert-1
-  - name: TODO_alert_2
-    severity: TODO
-    condition: TODO
-    duration: TODO
+  - name: elevated_request_error_rate
+    severity: critical
+    condition: "error_rate_pct > 2 and request_count >= 20 over rolling 5m"
+    duration: 5m
     type: symptom-based
     channel: slack
-    owner: TODO
+    owner: lab-operator
     runbook: docs/alerts.md#alert-2
-  - name: TODO_alert_3
-    severity: TODO
-    condition: TODO
-    duration: TODO
+  - name: low_retrieval_success_rate
+    severity: warning
+    condition: "tool_success_rate_pct < 90 and retrieval_attempts >= 10 over rolling 5m"
+    duration: 5m
     type: symptom-based
     channel: slack
-    owner: TODO
+    owner: lab-operator
     runbook: docs/alerts.md#alert-3

@@ -7,7 +7,13 @@ primary_slo:
     total_event: 'event == "request_received"'
   target_percent: 99.5
   error_budget_percent: 0.5
-  note: Học viên phải giải thích hoặc điều chỉnh ngưỡng bằng baseline của mình.
+  note: >-
+    In each rolling 28-day window, at least 99.5% of received requests must
+    complete within 3000 ms. The 3-second bound is the user-facing latency
+    objective. Request-based error budget is 0.005 times eligible requests;
+    for 10000 requests, at most 50 may be slow or unsuccessful. The supplied
+    CP1 sample has 10 of 10 responses within 3000 ms, but is not enough to
+    establish 28-day SLO compliance.
 guardrails:
   error_rate_pct_max: 2
   daily_cost_usd_max: 2.5
